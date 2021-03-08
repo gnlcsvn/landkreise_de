@@ -7,129 +7,41 @@
   <title>The HTML5 Herald</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
-
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin=""/>
+
   <!-- Make sure you put this AFTER Leaflet's CSS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <script src="leaflet.ajax.min.js"></script>
-  <!-- <script src="papaparse.js"></script> -->
-
-  <script type="text/javascript" src="data/shape_de.geojson"></script>
-  <script src="https://d3js.org/d3.v6.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.5.0/papaparse.min.js">
-  </script>
-
-  <style type="text/css">
-
-    #mapid { height: 1000px; }
-
-  </style>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.5.0/papaparse.min.js"></script>
+  <script src="js/leaflet.ajax.min.js"></script>
 </head>
 
 <body>
-  <input type="text" id="myText" value="Some text...">
-  <button onclick="myFunction()">Try it</button>
-  <div id="mapid"></div>
 
-  <script>
+  <div id="content" class="">
 
-    var mymap = L.map('mapid').setView([53, 8.8], 10);
+    <div class="zip-code">
+      <input type="text" id="myText" value="Some text...">
+      <button onclick="myFunction()">Try it</button>
+    </div>
 
-    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    <div id="mapid"></div>
 
-    const tileURL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    const tiles = L.tileLayer(tileURL, {attribution});
+  </div>
 
-    tiles.addTo(mymap);
 
-    var zip = ""
-    var map_loaded = false;
-    var csv_loaded = false;
-    var csv_data;
-
+  <div id="modal">
     
-    function style(feature) {
-
-     if (zip.includes(feature.properties.GEN)) {
-       return {
-         weight: 2,
-         opacity: 1,
-         color: 'white',       
-         fillOpacity: 0.3,
-         fillColor: '#32a852'
-       };
-     } else {
-       return {
-         weight: 2,
-         opacity: 1,
-         color: 'white',      
-         fillOpacity: 0.3,
-         fillColor: '#a83248'
-       };
-     }
-   }
-
-   var geojsonLayer = new L.GeoJSON.AJAX("data/shape_de.geojson", {
-    style: style
-  });
-
-   geojsonLayer.on('data:loaded', function() { 
-
-    geojsonLayer.addTo(mymap);
-    map_loaded = true;
-
-  })
-
-
-   function loadMap() {
-    if (map_loaded === true) {
-      geojsonLayer.setStyle(style)
-    }
-    
-  }
-
-  function myFunction() {
-    if (map_loaded === true && csv_loaded === true) {
-      var text_field_value = document.getElementById("myText").value;
-      zip = text_field_value;
-      console.log(csv_data[0])
-
-
-      csv_data.forEach(function(entry) {
-        if (entry.plz === text_field_value) {
-          console.log(entry.landkreis)
-          zip = entry.landkreis;
-          console.log(zip)
-          loadMap()
-        }
-
-      });
-
-      loadMap()
-    }
-  }
-
-
-    // CSV Stuff
-    Papa.parse("data/zuordnung_plz_ort_landkreis.csv", {
-      download: true,
-      header: true,
-      complete: function(results) {
-        csv_data = results.data
-        csv_loaded = true;
-      }
-    });
+  </div>
 
 
 
-  </script>
+
+  <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
