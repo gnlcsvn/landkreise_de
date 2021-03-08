@@ -78,7 +78,7 @@ function style_kreisfreie_stadt(feature) {
 // Load geojson data  //
 /**********************/
 
-var geojsonLayer = new L.GeoJSON.AJAX("../data/shape_de.geojson", {
+var geojsonLayer = new L.GeoJSON.AJAX("data/shape_de.geojson", {
   style: style_landkreis
 });
 
