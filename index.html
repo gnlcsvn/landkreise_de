@@ -18,29 +18,22 @@
   crossorigin=""></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.5.0/papaparse.min.js"></script>
+  <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
   <script src="js/leaflet.ajax.min.js"></script>
 </head>
 
 <body>
 
-  <div id="content" class="">
+  <div class="zip-code">
+      <input type="text" id="myText" value="" placeholder="Ihre PLZ...">
+      <button onclick="myFunction()">Karte laden</button>
+  </div>
 
-    <div class="zip-code">
-      <input type="text" id="myText" value="Some text...">
-      <button onclick="myFunction()">Try it</button>
-    </div>
-
+  <div id="content" class="hidden">
     <div id="mapid"></div>
-
   </div>
-
-
-  <div id="modal">
-    
-  </div>
-
-
-
+  
+  <div id="modal"></div>
 
   <script type="text/javascript" src="js/script.js"></script>
 </body>
