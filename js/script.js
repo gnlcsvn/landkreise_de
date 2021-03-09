@@ -25,6 +25,7 @@ var csv_data;
 var center_point = [];
 var center = []
 var pt1;
+document.getElementById("myText").value = ""; //Reset inputfield on reload
 
 
 /**************************************/
