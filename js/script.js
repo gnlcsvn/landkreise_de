@@ -17,8 +17,8 @@ tiles.addTo(mymap);
 // Initialize all variables  //
 /*****************************/
 
-var zip = "asdfsfasdf";
-var landkreis = "asfdsfas";
+var zip = "default";
+var landkreis = "";
 var map_loaded = false;
 var csv_loaded = false;
 var csv_data;
@@ -91,8 +91,8 @@ function style_kreis(feature) {
        color: 'white',       
        fillOpacity: 0.3,
        fillColor: '#32a852'
-      };
-    } else {
+     };
+   } else {
      return {
        weight: 2,
        opacity: 1,
@@ -100,8 +100,8 @@ function style_kreis(feature) {
        fillOpacity: 0.3,
        fillColor: '#a83248'
      };
-    }
-  } else {
+   }
+ } else {
   console.log("pt1 has not yet been asigned")
   return {
    weight: 2,
@@ -109,8 +109,8 @@ function style_kreis(feature) {
    color: 'white',      
    fillOpacity: 0.3,
    fillColor: '#a83248'
-    };
-  }
+ };
+}
 }
 
 
@@ -127,94 +127,104 @@ geojsonLayer.on('data:loaded', function() {
 
   geojsonLayer.addTo(mymap);
   map_loaded = true;
-
-  $("#modal").addClass("hidden");
-
+  activateUI()
 })
 
+/**********************/
+// Load csv data      //
+/**********************/
 
+Papa.parse("data/plz_kreis_centroid.csv", {
+  download: true,
+  header: true,
+  complete: function(results) {
+    csv_data = results.data
+    csv_loaded = true;
+    activateUI()
+  }
+});
 
-// function loadMap(stadt_typ) {
-//   if (map_loaded === true) {
-//     geojsonLayer.setStyle(style)
-//   }
+function activateUI() {
+  if (map_loaded && csv_loaded) {
+    $("#modal").addClass("hidden");
+  }
+}
 
-// }
 
 // function myFunction() {
-//   if (map_loaded === true && csv_loaded === true) {
+//   if (map_loaded === true) {
 //     var text_field_value = document.getElementById("myText").value;
-//     zip = text_field_value;
 
-//     csv_data.forEach(function(entry) {
-//       if (entry.plz === text_field_value) {
-//         if (entry.landkreis) {
-//           console.log("Es is ein Landkreis")
-//           landkreis = entry.landkreis;
-//           geojsonLayer.setStyle(style_landkreis)
+//     console.log("Text Value: " + text_field_value)
 
-//           console.log("OSMID: " + entry.osm_id)
+//     if (text_field_value) {
+//       zip = text_field_value;
+//     } else {
+//       zip = "error";
+//     }
 
-//           // we are using Nominatim service
-//           var geocode = 'https://nominatim.openstreetmap.org/details.php?osmtype=R&osmid=' + entry.osm_id + '&format=json'
-
-//           // use jQuery to call the API and get the JSON results
-//           $.getJSON(geocode, function(data) {
-//             // get coordiantes from osmid
-//             center_point = [data.centroid.coordinates[1], data.centroid.coordinates[0]]
-
-//             console.log(center_point)
-//             // mymap.setView([lon, lat], 10);
-//           }).done(function() {
-//            mymap.setView(center_point, 10);
-//          });
+//     var geocode = 'https://nominatim.openstreetmap.org/search?postalcode=' + zip + '&country=Germany&format=json'
 
 
-//         } else if (entry.ort) {
-//           console.log("Es is eine kreisfreie Stadt")
-//           landkreis = entry.ort;
-//           geojsonLayer.setStyle(style_kreisfreie_stadt)
+//     console.log("Clicked the button, let's go!")
+//     console.log('https://nominatim.openstreetmap.org/search?postalcode=' + zip + '&country=Germany&format=json')
+//     // use jQuery to call the API and get the JSON results
+//     $.getJSON(geocode).done(function(data) {
+//       try {
+//         console.log(data)
+//         // get coordiantes from zip code
+//         center = [Number(data[0].lon), Number(data[0].lat)]
+//         console.log(center)
 
-//           console.log("OSMID: " + entry.osm_id)
+//         pt1 = {
+//           "type": "Feature",
+//           "properties": {
+//             "marker-color": "#f00"
+//           },
+//           "geometry": {
+//             "type": "Point",
+//             "coordinates": center
+//           }
+//         };
 
+//         // console.log(pt1)
 
-//           // we are using Nominatim service
-//           var geocode = 'https://nominatim.openstreetmap.org/details.php?osmtype=R&osmid=' + entry.osm_id + '&format=json'
+//         geojsonLayer.setStyle(style_kreis)
+//         mymap.setView([center[1], center[0]], 11);
+//         $("#content").removeClass("hidden");
+//         mymap.invalidateSize()
 
-//           // use jQuery to call the API and get the JSON results
-//           $.getJSON(geocode, function(data) {
-//           // get coordiantes from osmid
-//           center_point = [data.centroid.coordinates[1], data.centroid.coordinates[0]]
-
-//           console.log(center_point)
-//             // mymap.setView([lon, lat], 10);
-//           }).done(function() {
-//             mymap.setView(center_point, 10);
-//           });
-
-//         }
-
+//         //if succesfully load data, change input field to correct
+//         $("#myText").removeClass("input-error");
+//         $("#myText").addClass("input-correct");
+//       } catch (e) {
+//         console.log(e)
+//         $("#myText").val("");
+//         $("#myText").attr("placeholder", "Bitte geben Sie eine gültige PLZ ein");
+//         $("#myText").removeClass("input-correct");
+//         $("#myText").addClass("input-error");
 //       }
-
 //     });
-
-
 //   }
 // }
 
 function myFunction() {
-  if (map_loaded === true) {
+  var kreis_found = false;
+  if (map_loaded && csv_loaded) {
     var text_field_value = document.getElementById("myText").value;
-    zip = text_field_value;
 
-    var geocode = 'https://nominatim.openstreetmap.org/search?postalcode=' + zip + '&country=Germany&format=json'
-    console.log("Clicked the button, let's go!")
-    // use jQuery to call the API and get the JSON results
-    $.getJSON(geocode).done(function(data) {
-      try {
-        console.log(data)
-        // get coordiantes from zip code
-        center = [Number(data[0].lon), Number(data[0].lat)]
+    console.log("Text Value: " + text_field_value)
+
+    if (text_field_value) {
+      zip = text_field_value;
+    } else {
+      zip = "error";
+    }
+
+    csv_data.forEach((entry) => {
+      if (zip === entry.plz) {
+        kreis_found = true;
+        center = [Number(entry.lon), Number(entry.lat)]
         console.log(center)
 
         pt1 = {
@@ -228,22 +238,30 @@ function myFunction() {
           }
         };
 
-        // console.log(pt1)
-
         geojsonLayer.setStyle(style_kreis)
         mymap.setView([center[1], center[0]], 11);
         $("#content").removeClass("hidden");
         mymap.invalidateSize()
-      } catch (e) {
-        console.log(e)
-        document.getElementById("myText").value = "Bitte geben sie eine exisiterende PLZ ein"
-      }
+
+        //if succesfully load data, change input field to correct
+        $("#myText").removeClass("input-error");
+        $("#myText").addClass("input-correct");
+      } 
     });
+
+    // Wenn kein Kreis gefunden wurde
+    if (!kreis_found) {
+      console.log("Kein Kreis gefunden")
+      $("#myText").val("");
+      $("#myText").attr("placeholder", "Bitte geben Sie eine gültige PLZ ein");
+      $("#myText").removeClass("input-correct");
+      $("#myText").addClass("input-error");
+    }
   }
 }
 
 
-/**********************/
+  /**********************/
 // Load csv data      //
 /**********************/
 

@@ -25,8 +25,16 @@ input[type=text] {
   margin: 8px 0;
   margin-left: 1%;
   border-radius: 4px;
-  border: 2px solid lightgrey;
   font-size: 1.5em;
+}
+
+.input-correct {
+  border: 2px solid lightgrey;
+}
+
+.input-error {
+  border: 2px solid red;
+  color: red;
 }
 
 button {
