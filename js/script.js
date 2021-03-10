@@ -12,6 +12,15 @@ const tiles = L.tileLayer(tileURL, {attribution});
 // Add OSM tiles to the map
 tiles.addTo(mymap);
 
+//Disable map interaction
+mymap.dragging.disable();
+mymap.touchZoom.disable();
+mymap.doubleClickZoom.disable();
+mymap.scrollWheelZoom.disable();
+mymap.boxZoom.disable();
+mymap.keyboard.disable();
+if (mymap.tap) mymap.tap.disable();
+
 
 /*****************************/
 // Initialize all variables  //
@@ -135,7 +144,7 @@ geojsonLayer.on('data:loaded', function() {
 // Load csv data      //
 /**********************/
 
-Papa.parse("data/plz_kreis_centroid.csv", {
+Papa.parse("data/plz_kreis_centroid_new.csv", {
   download: true,
   header: true,
   complete: function(results) {

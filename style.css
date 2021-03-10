@@ -1,6 +1,7 @@
 #mapid { 
   width: 100%;
   height: 1000px; 
+  cursor: default;
 }
 
 body {
