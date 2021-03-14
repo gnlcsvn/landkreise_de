@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Condition B</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.5.0/papaparse.min.js"></script>
+  <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
+  <script src="js/leaflet.ajax.min.js"></script>
+</head>
+
+<body>
+
+  <div class="zip-code">
+      <input type="text" id="myText" class="input-correct" value="" placeholder="Ihre PLZ...">
+      <button onclick="myFunction()">Karte laden</button>
+  </div>
+
+  <div id="content" class="hidden">
+    <div id="mapid"></div>
+  </div>
+  
+  <div id="modal"></div>
+
+  <script type="text/javascript" src="js/script_condition_green_green.js"></script>
+  <!-- <script type="text/javascript" src="js/test.js"></script> -->
+  <!-- <script type="text/javascript" src="js/test2.js"></script> -->
+  <!-- <script type="text/javascript" src="js/test3.js"></script> -->
+</body>
+</html>
