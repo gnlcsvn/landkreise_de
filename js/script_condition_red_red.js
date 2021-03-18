@@ -2,7 +2,7 @@
 // Load the Map and do all the leaflet stuff  //
 /**********************************************/
 
-var mymap = L.map('mapid').setView([53, 8.8], 10);
+var mymap = L.map('mapid', { zoomControl: false }).setView([53, 8.8], 10);
 
 const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
