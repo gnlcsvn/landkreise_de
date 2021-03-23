@@ -249,7 +249,20 @@ function myFunction() {
         };
 
         geojsonLayer.setStyle(style_kreis)
-        mymap.setView([center[1], center[0]], 11);
+        zoomLevel = 0;
+                //set zoom level
+        var width = document.documentElement.clientWidth;
+            // tablets are between 768 and 922 pixels wide
+            // phones are less than 768 pixels wide
+        if (width > 768) {
+            zoomLevel = 11;
+            console.log("Zoom level: 11")
+        }  else {
+            zoomLevel = 10;
+            console.log("Zoom level: 10")
+        }
+
+        mymap.setView([center[1], center[0]], zoomLevel);
         $("#content").removeClass("hidden");
         mymap.invalidateSize()
 
