@@ -78,3 +78,22 @@ button {
                 50% 50% 
                 no-repeat;
 }
+
+@media (max-width: 530px) {
+  input[type=text] {
+    padding: 5px 1%;
+    margin: 0;
+    margin-left: 1%;
+    font-size: 0.8em;
+    height: 20px;
+  }
+
+  button {
+    padding: 1px 1px;
+    padding-left: 1%;
+    margin: 0;
+    margin-right: 1%;
+    font-size: 0.8em;
+    height: 35px;
+  }
+}

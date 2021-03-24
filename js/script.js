@@ -254,7 +254,7 @@ function myFunction() {
         var width = document.documentElement.clientWidth;
             // tablets are between 768 and 922 pixels wide
             // phones are less than 768 pixels wide
-        if (width > 768) {
+        if (width > 767) {
             zoomLevel = 11;
             console.log("Zoom level: 11")
         }  else {
