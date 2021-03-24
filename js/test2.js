@@ -25,8 +25,10 @@ var csv_data;
 var center_point = [];
 var center = []
 var pt1;
+var area;
 var geojson_counter = 0;
 var found_polygon = false;
+var has_area = false;
 
 
 /**************************************/
@@ -39,6 +41,10 @@ function style_kreis(feature) {
     if (turf.booleanPointInPolygon(pt1, feature.geometry)) { 
       // console.log("found it")
       found_polygon = true;
+      area = Number(feature.properties.SHAPE_Area);
+      if (area > 1) {
+        has_area = true;
+      }
     } else {
 
     }
@@ -84,8 +90,35 @@ function activateUI() {
   }
 }
 
+function mean(numbers) {
+    var total = 0, i;
+    for (i = 0; i < numbers.length; i += 1) {
+        total += numbers[i];
+    }
+    return total / numbers.length;
+} 
+
+function median(numbers) {
+    // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
+    var median = 0, numsLen = numbers.length;
+    numbers.sort();
+ 
+    if (
+        numsLen % 2 === 0 // is even
+    ) {
+        // average of two middle numbers
+        median = (numbers[numsLen / 2 - 1] + numbers[numsLen / 2]) / 2;
+    } else { // is odd
+        // middle number only
+        median = numbers[(numsLen - 1) / 2];
+    }
+ 
+    return median;
+}
 
 function myFunction() {
+
+  var array_area = [];
 
     csv_data.forEach((entry) => {
 
@@ -105,11 +138,19 @@ function myFunction() {
         };
 
         found_polygon = false;
+        has_area = false;
         geojsonLayer.setStyle(style_kreis)
 
         if (found_polygon === false) {
           console.log("No polygon for zip: " + entry.plz)
           console.log("At gps: " + center)
+        }
+
+        if (has_area === false) {
+          console.log("No area for zip: " + entry.plz)
+          console.log("At gps: " + center)
+        } else {
+          array_area.push(area)
         }
 
         // console.log(found_polygon)
@@ -121,4 +162,10 @@ function myFunction() {
         $("#myText").removeClass("input-error");
         $("#myText").addClass("input-correct");
     });
-} 
+
+    console.log(array_area);
+    console.log("Mean: " + mean(array_area)); //2742458185.4350433
+    console.log("Median: " + median(array_area)); //2776564047.729329
+}
+
+

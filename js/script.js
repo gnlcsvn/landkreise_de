@@ -34,6 +34,7 @@ var csv_data;
 var center_point = [];
 var center = []
 var pt1;
+var area;
 document.getElementById("myText").value = ""; //Reset inputfield on reload
 
 
@@ -95,6 +96,8 @@ function style_kreis(feature) {
   if (pt1) {
     if (turf.booleanPointInPolygon(pt1, feature.geometry)) { 
       console.log("found it")
+      area = feature.properties.SHAPE_Area;
+      console.log(Number(area))
       return {
        weight: 2,
        opacity: 1,
@@ -252,11 +255,11 @@ function myFunction() {
         zoomLevel = 0;
                 //set zoom level
         var width = document.documentElement.clientWidth;
-            // tablets are between 768 and 922 pixels wide
-            // phones are less than 768 pixels wide
-        if (width > 767) {
-            zoomLevel = 11;
-            console.log("Zoom level: 11")
+            // change zoom level based on shape area
+            //mean shape area is 2742458185.4350433
+        if (area > 2742458185) {
+            zoomLevel = 9;
+            console.log("Zoom level: 9")
         }  else {
             zoomLevel = 10;
             console.log("Zoom level: 10")
