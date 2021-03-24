@@ -79,7 +79,7 @@ button {
                 no-repeat;
 }
 
-@media (max-width: 530px) {
+@media (max-width: 375px) {
   input[type=text] {
     padding: 5px 1%;
     margin: 0;
